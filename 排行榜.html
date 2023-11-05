@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="index.js"></script>
+    <title>排行榜</title>
+  </head>
+  <body>
+    <div>
+      Hello!请输入姓名或学号来定位你的名次
+      <input type="text" value="" />
+      <button class="shuaxin">刷新</button>
+    </div>
+    <hr />
+    <div class="container">
+      <div>
+        <div id="title" class="rank">排行</div>
+      </div>
+      <div class="name2">
+        <div id="title" class="name1">姓名</div>
+      </div>
+      <div class="id2">
+        <div id="title" class="id">学号</div>
+      </div>
+      <div class="total2">
+        <div id="title" class="total">总分</div>
+      </div>
+      <div class="s02">
+        <div id="title" class="s0">0</div>
+      </div>
+      <div class="s12">
+        <div id="title" class="s1">1</div>
+      </div>
+      <div class="s22">
+        <div id="title" class="s2">2</div>
+      </div>
+      <div class="s32">
+        <div id="title" class="s3">3</div>
+      </div>
+    </div>
+    <script>
+      console.log(document.querySelector(".shuaxin"));
+      for (i = 1; i <= 20; i++) {
+        var rankp = document.createElement("p");
+        var rankkkk = document.querySelector(".rank");
+        rankkkk.parentNode.appendChild(rankp);
+        rankp.textContent = i;
+      }
+      var shuaaaa = document.querySelector(".shuaxin");
+      shuaaaa.addEventListener("click", () => {
+        fetch("https://puzzle.qieee.top/api/rank")
+          .then((reponse) => reponse.json())
+          .then((data) => {
+            data.sort((a, b) => {
+              var suma =
+                a.score[0].score +
+                a.score[1].score +
+                a.score[2].score +
+                a.score[3].score;
+              var sumb =
+                b.score[0].score +
+                b.score[1].score +
+                b.score[2].score +
+                b.score[3].score;
+              if (suma > sumb) {
+                return -1;
+              } else if (suma == sumb) {
+                return 0;
+              } else {
+                return 1;
+              }
+            });
+            for (i = 0; i < 20; i++) {
+              //替换,实现刷新功能
+              var name2 = document.querySelectorAll(".name2 p");
+              name2[i].textContent = data[i].name; //i删掉了就只换了第一个
+
+              var id2 = document.querySelectorAll(".id2 p");
+              id2[i].textContent = data[i].id;
+
+              var score0p = document.querySelectorAll(".s02 p");
+              score0p[i].textContent = data[i].score[0].score;
+              if (score0p[i].textContent == 10) {
+                score0p[i].setAttribute("style", "color:green");
+              } else {
+                score0p[i].setAttribute("style", "color:red");
+              }
+
+              var score1p = document.querySelectorAll(".s12 p");
+              score1p[i].textContent = data[i].score[1].score;
+              if (score1p[i].textContent == 10) {
+                score1p[i].setAttribute("style", "color:green");
+              } else {
+                score1p[i].setAttribute("style", "color:red");
+              }
+
+              var score2p = document.querySelectorAll(".s22 p");
+              score2p[i].textContent = data[i].score[2].score;
+              if (score2p[i].textContent == 10) {
+                score2p[i].setAttribute("style", "color:green");
+              } else {
+                score2p[i].setAttribute("style", "color:red");
+              }
+
+              var score3p = document.querySelectorAll(".s32 p");
+              score3p[i].textContent = data[i].score[3].score;
+              if (score3p[i].textContent == 10) {
+                score3p[i].setAttribute("style", "color:green");
+              } else {
+                score3p[i].setAttribute("style", "color:red");
+              }
+
+              var totalp = document.querySelectorAll(".total2 p");
+              totalp[i].textContent =
+                Number(score0p[i].textContent) +
+                Number(score1p[i].textContent) +
+                Number(score2p[i].textContent) +
+                Number(score3p[i].textContent);
+            }
+          });
+      });
+      var search = document.querySelector("input");
+      search.addEventListener("input", () => {
+        var result = search.value;
+        if (result) {
+          for (i = 0; i < 20; i++) {
+            if (
+              document
+                .querySelectorAll("div.name2 p")
+                [i].textContent.indexOf(search.value) != -1
+            ) {
+              document
+                .querySelectorAll("div.name2 p")
+                [i].setAttribute("style", "background-color:white");
+            } else {
+              document
+                .querySelectorAll("div.name2 p")
+                [i].setAttribute("style", " ");
+            }
+            if (
+              document
+                .querySelectorAll("div.id2 p")
+                [i].textContent.indexOf(search.value) != -1
+            ) {
+              document
+                .querySelectorAll("div.id2 p")
+                [i].setAttribute("style", "background-color:white");
+            } else {
+              document
+                .querySelectorAll("div.id2 p")
+                [i].setAttribute("style", " ");
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
