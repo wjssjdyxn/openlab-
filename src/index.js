@@ -1,6 +1,30 @@
 fetch("https://puzzle.qieee.top/api/rank")
   .then((reponse) => reponse.json())
   .then((data) => {
+    for (i = 0; i < 20; i++) {
+      if (data[i].score[0].score == 10) {
+        data[i].score[0].mark = 1;
+        break;
+      }
+    }
+    for (i = 0; i < 20; i++) {
+      if (data[i].score[1].score == 10) {
+        data[i].score[1].mark = 1;
+        break;
+      }
+    }
+    for (i = 0; i < 20; i++) {
+      if (data[i].score[2].score == 10) {
+        data[i].score[2].mark = 1;
+        break;
+      }
+    }
+    for (i = 0; i < 20; i++) {
+      if (data[i].score[3].score == 10) {
+        data[i].score[3].mark = 1;
+        break;
+      }
+    }
     data.sort((a, b) => {
       var suma =
         a.score[0].score +
@@ -36,7 +60,11 @@ fetch("https://puzzle.qieee.top/api/rank")
       score0.parentNode.appendChild(score0p);
       score0p.textContent = data[i].score[0].score;
       if (score0p.textContent == 10) {
-        score0p.setAttribute("style", "color:green");
+        if (data[i].score[0].mark == 1) {
+          score0p.setAttribute("style", "color:darkgreen");
+        } else {
+          score0p.setAttribute("style", "color: rgb(23, 185, 12)");
+        }
       } else {
         score0p.setAttribute("style", "color:red");
       }
@@ -46,7 +74,11 @@ fetch("https://puzzle.qieee.top/api/rank")
       score1.parentNode.appendChild(score1p);
       score1p.textContent = data[i].score[1].score;
       if (score1p.textContent == 10) {
-        score1p.setAttribute("style", "color:green");
+        if (data[i].score[1].mark == 1) {
+          score1p.setAttribute("style", "color:darkgreen");
+        } else {
+          score1p.setAttribute("style", "color: rgb(23, 185, 12)");
+        }
       } else {
         score1p.setAttribute("style", "color:red");
       }
@@ -55,7 +87,11 @@ fetch("https://puzzle.qieee.top/api/rank")
       score2.parentNode.appendChild(score2p);
       score2p.textContent = data[i].score[2].score;
       if (score2p.textContent == 10) {
-        score2p.setAttribute("style", "color:green");
+        if (data[i].score[2].mark == 1) {
+          score2p.setAttribute("style", "color:darkgreen");
+        } else {
+          score2p.setAttribute("style", "color: rgb(23, 185, 12)");
+        }
       } else {
         score2p.setAttribute("style", "color:red");
       }
@@ -65,7 +101,11 @@ fetch("https://puzzle.qieee.top/api/rank")
       score3.parentNode.appendChild(score3p);
       score3p.textContent = data[i].score[3].score;
       if (score3p.textContent == 10) {
-        score3p.setAttribute("style", "color:green");
+        if (data[i].score[3].mark == 1) {
+          score3p.setAttribute("style", "color:darkgreen");
+        } else {
+          score3p.setAttribute("style", "color: rgb(23, 185, 12)");
+        }
       } else {
         score3p.setAttribute("style", "color:red");
       }
